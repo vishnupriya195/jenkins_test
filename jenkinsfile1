@@ -9,7 +9,7 @@ pipeline {
                            parameters([
                                 choice(
                                    choices: ["dev", "uat", "prod"],
-                                   name: "Environment"
+                                   name: "ENVIRONMENT"
                                    )
                             ])
                        ])
@@ -18,7 +18,7 @@ pipeline {
          } 
          stage('print parameter') {
               steps {
-                 echo "$Environment"
+                 echo "$ENVIRONMENT"
                  }
           }
     }
