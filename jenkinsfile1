@@ -12,7 +12,7 @@ pipeline {
                                    name: "ENVIRONMENT"
                                    ),
                                 string(
-                                    defaultValue: "training',
+                                    defaultValue: "training",
                                     name: "STRING")
                             ])
                        ])
