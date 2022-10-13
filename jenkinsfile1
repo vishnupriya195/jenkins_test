@@ -7,7 +7,8 @@ pipeline {
                script {
                   properties([pipelineTriggers([githubPush()])])
                   }
-            }      
+            }
+       }
        stage('Setup Parameter') {
            steps {
                   script {
