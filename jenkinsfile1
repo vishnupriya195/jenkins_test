@@ -1,0 +1,28 @@
+pipeline {
+   agent any
+   
+   stages {
+       stage('Setup Parameter') {
+           steps {
+                  script {
+                       properties([
+                           parameters([
+                                choice(
+                                   choices: ["dev", "uat", "prod"],
+                                   name: "Environment"
+                                   )
+                            ])
+                       ])
+                    }
+               }
+         } 
+         stage('print parameter') {
+              steps {
+                 echo "$Environment"
+                 }
+          }
+    }
+}
+                       
+                                   
+                   
