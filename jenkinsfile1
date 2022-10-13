@@ -1,10 +1,13 @@
 pipeline {
    agent any
-   triggers {
-       pollSCM("*/2 * * * *")
-    }
-   
+  
    stages {
+       stage('enable webhook') {
+           steps {
+               script {
+                  properties([pipelineTriggers([githubPush()])])
+                  }
+            }      
        stage('Setup Parameter') {
            steps {
                   script {
