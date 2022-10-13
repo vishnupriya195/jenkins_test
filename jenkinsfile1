@@ -22,7 +22,7 @@ pipeline {
          stage('print parameter') {
               steps {
                  echo "Choice parameter is $ENVIRONMENT"
-                 echo 'String parameter is $STRING"
+                 echo "String parameter is $STRING"
                  }
           }
     }
