@@ -34,7 +34,7 @@ pipeline {
             }
         }
         
-    stage('pullscm') {
+    stage('pulltestingcode') {
       steps {
         git branch: 'main', credentialsId: 'GitHub', url: 'git@github.com:sathishbob/functional-testing.git'
       }
