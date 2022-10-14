@@ -50,7 +50,6 @@ pipeline {
                       sh 'echo ssh -i $SSH_KEY -l git -o StrictHostKeyChecking=no \\"\\$@\\" > local_ssh.sh'
                       sh 'chmod +x local_ssh.sh'
                       withEnv(['GIT_SSH=./local_ssh.sh']) {
-                          sh 'git checkout -b qa'
                           sh 'git add .'
                           sh 'git commit -m "merging master to qa on sucesfull build"'
                           sh 'git remote rename origin upstream'
