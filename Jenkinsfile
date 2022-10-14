@@ -52,6 +52,8 @@ pipeline {
                       sh 'chmod +x local_ssh.sh'
                       withEnv(['GIT_SSH=./local_ssh.sh']) {
                           sh 'git clone git@github.com:sathishbob/jenkins_test.git'
+                          sh 'cd jenkins_test'
+                          sh 'git add .'
                           sh 'git commit -m "merging master to qa on sucesfull build"'
                           sh 'git checkout -b qa'
                           sh 'git push origin qa'
