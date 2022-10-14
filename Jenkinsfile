@@ -55,7 +55,6 @@ pipeline {
                           sh 'cd jenkins_test'
                           sh 'git add .'
                           sh 'git commit -m "merging master to qa on sucesfull build"'
-                          sh 'git checkout -b qa'
                           sh 'git push origin qa'
                       }
                   }   
