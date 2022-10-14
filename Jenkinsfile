@@ -46,7 +46,7 @@ pipeline {
          post {
               success {
                   publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'TestReport', reportFiles: 'TestReport.html', reportName: 'FunctionalTestReport', reportTitles: '', useWrapperFileDirectly: true])
-                  withCredentials([sshUserPrivateKey(credentialsID: 'GitHub', keyfileVariable: 'SSH_KEY')]) {
+                  withCredentials([sshUserPrivateKey(credentialsId: 'GitHub', keyFileVariable: 'SSH_KEY')]) {
                       sh 'echo ssh -i $SSH_KEY -l git -o StrictHostKeyChecking=no \\"\\$@\\" > local_ssh.sh'
                       sh 'chmod +x local_ssh.sh'
                       withEnv(['GIT_SSH=./local_ssh.sh']) {
