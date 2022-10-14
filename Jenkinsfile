@@ -57,6 +57,7 @@ pipeline {
                           git add .
                           git commit -m "merging master to qa on sucesfull build"
                           git checkout -b qa
+                          git pull
                           git push origin qa'''
                       }
                   }   
