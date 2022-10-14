@@ -50,13 +50,12 @@ pipeline {
                   withCredentials([sshUserPrivateKey(credentialsId: 'GitHub', keyFileVariable: 'SSH_KEY')]) {
                       sh 'echo ssh -i $SSH_KEY -l git -o StrictHostKeyChecking=no \\"\\$@\\" > local_ssh.sh'
                       sh 'chmod +x local_ssh.sh'
-                      withEnv(['GIT_SSH=./local_ssh.sh']) {
+                      withEnv(['GIT_SSH=/var/lib/jenkins/workspace/pipelienfromgit/local_ssh.sh']) {
                           sh 'git clone git@github.com:sathishbob/jenkins_test.git'
                           sh '''cd jenkins_test
                           echo test>deploy.txt
                           git add .
                           git commit -m "merging master to qa on sucesfull build"
-                          cd ..
                           git push origin qa'''
                       }
                   }   
