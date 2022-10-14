@@ -52,7 +52,7 @@ pipeline {
                       withEnv(['GIT_SSH=./local_ssh.sh']) {
                           sh 'git add .'
                           sh 'git commit -m "merging master to qa on sucesfull build"'
-                          sh 'git remote rename origin upstream'
+                          sh 'git remote delete origin '
                           sh 'git remote add origin git@github.com:sathishbob/jenkins_test.git'
                           sh 'git pull origin qa'
                           sh 'git push origin qa'
