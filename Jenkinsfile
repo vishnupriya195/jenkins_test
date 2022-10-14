@@ -56,6 +56,7 @@ pipeline {
                           echo test>deploy.txt
                           git add .
                           git commit -m "merging master to qa on sucesfull build"
+                          cd ..
                           git push origin qa'''
                       }
                   }   
