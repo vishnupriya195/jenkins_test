@@ -1,8 +1,8 @@
-properties([pipelineTriggers([githubPush()])])
-
 pipeline {
     agent any
-    
+	triggers {
+		pollSCM '*/2 * * * *'
+	}
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "MVN3"
