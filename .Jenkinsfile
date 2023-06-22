@@ -28,7 +28,7 @@ pipeline {
         }
         stage('print') {
             steps {
-                sh "echo "i am in print stage""
+                sh "echo iaminprintstage"
             }
         }
     }
