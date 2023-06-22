@@ -7,17 +7,10 @@ pipeline {
     }
 
     stages {
-        stage('Enable webhook') {
-            steps {
-                script {
-                    properties([pipelineTriggers([githubPush()])])
-                }
-            }
-        }
-        stage('Pull SCM') {
+       stage('Pull SCM') {
             steps {
                 // Get some code from a GitHub repository
-                git credentialsId: 'GitHub', url: 'git@github.com:sathishbob/jenkins_test.git'
+                git credentialsId: 'github', url: 'git@github.com:sathishbob/jenkins_test.git'
             }
         }
         stage('Build') {
@@ -30,21 +23,6 @@ pipeline {
                 success {
                     junit 'api-gateway/target/surefire-reports/*.xml'
                     archiveArtifacts 'api-gateway/target/*.jar' 
-                    emailext body: "Please check console output at $BUILD_URL for more information \n Artifact is avaliable at $RUN_ARTIFACTS_DISPLAY_URL", to: "sathishbabudevops@gmail.com", subject: '$PROJECT_NAME is completed - Build number is $BUILD_NUMBER - Build ststus is $BUILD_STATUS'
-                }
-            }
-        }
-        stage("Email") {
-            steps {
-                script {
-                    cest = TimeZone.getTimeZone("CEST")
-                    def cest = new Date()
-                    println(cest)
-                    def mailRecipients = 'sathishbob@gmail.com'
-                    def jobName = currentBuild.fullDisplayName
-                    env.Name = jobName
-                    env.cest = cest
-                    emailext body: '''${SCRIPT, template="email-html.template"}''', mimeType: 'text/html', subject: "${jobName}", to: "${mailRecipients}", replyTo: "${mailRecipients}"
                 }
             }
         }
