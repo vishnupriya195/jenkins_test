@@ -43,6 +43,12 @@ pipeline {
                 }
             }
         }
+        stage("print scm vars") {
+            steps {
+                echo "${scmVars}"
+            }
+        }
+        
         stage("Approval") {
             options {
                 timeout(time: 1, unit: 'MINUTES')
