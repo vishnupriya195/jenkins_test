@@ -43,18 +43,13 @@ pipeline {
                 }
             }
         }
-        stage("print scm vars") {
-            steps {
-                echo "${scmVars}"
-            }
-        }
-        
+   
         stage("Approval") {
             options {
                 timeout(time: 1, unit: 'MINUTES')
             }
             steps {
-                emailext body: "Please click at $BUILD_URL/input to approve the deployment \n This link is valid for 1 minute ", to: "sathishbob@gmail.com", subject: '$PROJECT_NAME is ready for deployment - Build number is $BUILD_NUMBER - Please approve to proceed with deployment'
+                emailext body: "Please click at $BUILD_URL/input to approve the deployment \n This link is valid for 1 minute \n Git commit id is ${GIT_COMMIT} commited by ${GIT_AUTHOR_NAME}  ", to: "sathishbob@gmail.com", subject: '$PROJECT_NAME is ready for deployment - Build number is $BUILD_NUMBER - Please approve to proceed with deployment'
                 input "Please approve to proceed with deployment"
             }
         }
