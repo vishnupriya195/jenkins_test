@@ -48,6 +48,7 @@ pipeline {
                 timeout(time: 1, unit: 'MINUTES')
             }
             steps {
+                emailext body: "Please click at $BUILD_URL/input to approve the deployment \n This link is valid for 1 minute ", to: "sathishbob@gmail.com", subject: '$PROJECT_NAME is ready for deployment - Build number is $BUILD_NUMBER - Please approve to proceed with deployment'
                 input "Please approve to proceed with deployment"
             }
         }
