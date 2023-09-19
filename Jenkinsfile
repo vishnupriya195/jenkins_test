@@ -44,18 +44,19 @@ pipeline {
             }
         }
    
-        stage("Approval") {
-            options {
-                timeout(time: 1, unit: 'MINUTES')
-            }
+        stage("Email") {
             steps {
-                emailext body: "Please click at $BUILD_URL/input to approve the deployment \n This link is valid for 1 minute \n Git commit id is ${GIT_COMMIT}", to: "sathishbob@gmail.com", subject: '$PROJECT_NAME is ready for deployment - Build number is $BUILD_NUMBER - Please approve to proceed with deployment'
-                input "Please approve to proceed with deployment"
-            }
-        }
-        stage("Deployment") {
-            steps {
-                echo "Deploying application"
+                script {
+                    cest = TimeZone.getTimeZone("CEST")
+                    def cest = new Date ()
+                    println(cest)
+                    def mailReceipients = 'sathishbob@gmail.com'
+                    def jobName = currentBuild.fullDisplayName
+                    env.Name = Name
+                    env.cest = cest
+                    emailext body: '''${SCRIPT, template="email-html.template''', mimeType: 'test/html', subject: "[jenkins] ${jobName}", to: "${mailReceipients}", replayTo: "${mailReceipients}"
+                }
+            }            
             }
         }
     }
