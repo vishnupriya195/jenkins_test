@@ -1,0 +1,15 @@
+# Define custom patterns for secret detection (add more as needed)
+[patterns]
+
+CreditCard = [
+    "\\b[0-9]{4}(?:-[0-9]{4}){3}(?:-[0-9]{3})?\\b",  # Common credit card formats
+    "\\b[A-Z]{4}-[0-9]{4}-[A-Z]{4}\\b"              # Example issuer-specific format
+]
+
+# Ignore specific files or directories
+[ignore]
+# Exclude files containing build artifacts, logs, etc.
+patterns = [
+    ".*/build/.+",
+    ".*/logs/.+"
+]
