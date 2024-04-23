@@ -34,7 +34,7 @@ pipeline {
                 // failed, record the test results and archive the jar file.
                 success {
                     junit stdioRetention: '', testResults: 'api-gateway/target/surefire-reports/*.xml'
-                    archiveArtifacts 'target/*.jar'
+                    archiveArtifacts 'api-gateway/target/*.jar'
                 }
             }
         }
