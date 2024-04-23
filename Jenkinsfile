@@ -37,4 +37,9 @@ pipeline {
             }
         }
     }
+    post {
+	success {
+            emailext body: "Please check console aouput at $BUILD_URL for more information\n", to: "sathishbabudevops@gmail.com", subject: 'Jenkinstraining - $PROJECT_NAME build completed sucessfully - Build number is $BUILD_NUMBER - Build status is $BUILD_STATUS' 
+        }  
+    }
 }
