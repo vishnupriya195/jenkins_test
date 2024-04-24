@@ -49,8 +49,8 @@ pipeline {
 	    stage('sonar quality gate') {
 		    steps {
 			    script {
-				    sleep(60)
-				    qg = WaitForQualityGate()
+				    sleep(30)
+				    qg = waitForQualityGate()
 				    if (qg.status != 'OK') {
 					    error "pipeline aborted due to quality gate failure: ${qg.status}"
 				    }
