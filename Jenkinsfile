@@ -51,7 +51,7 @@ pipeline {
 			    script {
 				    sleep(60)
 				    qg = WaitForQualityGate()
-				    if (qg.status !- 'OK') {
+				    if (qg.status != 'OK') {
 					    error "pipeline aborted due to quality gate failure: ${qg.status}"
 				    }
 			    }
