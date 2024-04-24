@@ -36,11 +36,11 @@ pipeline {
                 }
             }
         }
-	 stage('sonar analysis) {
+	 stage('sonar analysis') {
 	       steps {
 		       script {
 			       scannerHome = tool 'sonar';
-			       withSonarQubeEnv('sonar) {
+			       withSonarQubeEnv('sonar') {
 						sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=jenkins_test -Dsonar.projectName=jenkins_test -Dsonar.projectVersion=1.0 -Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=$WORKSPACE "
 						}
 				}
