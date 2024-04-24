@@ -45,7 +45,18 @@ pipeline {
 						}
 				}
 			}
-	   }					
+	   }
+	    stage('sonar quality gate') {
+		    steps {
+			    script {
+				    sleep(60)
+				    qg = WaitForQualityGate()
+				    if (qg.status !- 'OK') {
+					    error "pipeline aborted due to quality gate failure: ${qg.status}"
+				    }
+			    }
+		    }
+	    }
     }
     post {
 	success {
