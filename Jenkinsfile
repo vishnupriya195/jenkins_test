@@ -15,7 +15,7 @@ pipeline {
 			}
 	    stage ('print stage') {
 		    steps {
-			    bat 'echo "new stage"'
+			    sh 'echo "new stage"'
 		    }
 	    }
         stage('Build') {
