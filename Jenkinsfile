@@ -51,7 +51,7 @@ pipeline {
 	    stage('sonar quality gate') {
 		    steps {
 			    script {
-				    sleep(40)
+				    sleep(90)
 				    qg = waitForQualityGate()
 				    if (qg.status != 'OK') {
 					    error "pipeline aborted due to quality gate failure: ${qg.status}"
@@ -64,7 +64,7 @@ pipeline {
 			    script {
 				    sh '''
 					sudo rm -rf $PWD/report/* || true
-     					sudo chmod 777 $PWD
+     					sudo chmod -R 777 $PWD
      					sudo mkdir -p $PWD/OWASP-Dependency-Check/data
 	 				sudo mkdir -p $PWD/report
       					sudo chmod 777 $PWD/OWASP-Dependency-Check/data
