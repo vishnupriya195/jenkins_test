@@ -43,7 +43,7 @@ pipeline {
 		       script {
 			       scannerHome = tool 'sonar';
 			       withSonarQubeEnv('sonar') {
-						sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=jenkins_test -Dsonar.projectName=jenkins_test -Dsonar.projectVersion=1.0 -Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=$WORKSPACE -Dsonar.java.binaries=$WORKSPACE"
+						sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=jenkins_test -Dsonar.projectName=jenkins_test -Dsonar.projectVersion=1.0 -Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=$WORKSPACE -Dsonar.java.binaries=$WORKSPACE -Dsonar.exclusions=OWASP-Dependency-Check/**, report/**"
 						}
 				}
 			}
@@ -51,7 +51,7 @@ pipeline {
 	    stage('sonar quality gate') {
 		    steps {
 			    script {
-				    sleep(90)
+				    sleep(40)
 				    qg = waitForQualityGate()
 				    if (qg.status != 'OK') {
 					    error "pipeline aborted due to quality gate failure: ${qg.status}"
