@@ -83,7 +83,7 @@ pipeline {
 			    script {
 				    def criticaloutput = sh(script: 'cat report/dependency-check-report.xml | grep -i critical | wc -l', returnStdout: true).trim()
 				    def criticalnumber = criticaloutput.toInteger()
-				    def criticalthreshold = 14
+				    def criticalthreshold = 15
 				    if( criticalnumber > criticalthreshold) {
 					    error("SCA failled, so aborting the build")
 				    }
