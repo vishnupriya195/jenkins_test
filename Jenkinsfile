@@ -106,7 +106,7 @@ pipeline {
               				allowMissing: false,
               				alwaysLinkToLastBuild: true,
               				keepAll: true,
-              				reportDir: '${WORKSPACE}/dastreport',
+              				reportDir: 'dastreport',
               				reportFiles: 'dast.html',
               				reportName: 'DAST_Report'
               ]
