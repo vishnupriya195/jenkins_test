@@ -126,6 +126,15 @@ pipeline {
 			    }
 		    }
 	    }
+	    stage('VAPT') {
+		    steps {
+			    script {
+				    sh '''
+	   				sudo chmod 777 $PWD/vapt
+					sudo docker run --rm -v $(pwd)/vapt:/openvas/results/ sathishbob/openvas /openvas/run_scan.py 123.123.123.123 openvas_scan_report -u root -p password'''
+			    }
+		    }
+	  }
     }
     post {
 	success {
