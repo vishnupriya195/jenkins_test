@@ -114,6 +114,18 @@ pipeline {
 		    }
 	    	}
 	  }
+	  stage('dast quality gate') {
+		    steps {
+			    script {
+				    def criticaloutput = sh(script: 'cat dastreport/dast.xml | grep -i high | wc -l', returnStdout: true).trim()
+				    def criticalnumber = criticaloutput.toInteger()
+				    def criticalthreshold = 4
+				    if( criticalnumber > criticalthreshold) {
+					    error("dast failled, so aborting the build")
+				    }
+			    }
+		    }
+	    }
     }
     post {
 	success {
