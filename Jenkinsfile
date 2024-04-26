@@ -48,7 +48,7 @@ pipeline {
 	stage('docker iamge scan' {
 		steps{
 			script {
-				sh ' grype apache  -o template -t Docker/report.tmpl --file Docker/grype.html
+				sh ' sudo grype apache  -o template -t Docker/report.tmpl --file Docker/grype.html'
 			}
 		}
 		post {
@@ -68,7 +68,7 @@ pipeline {
 	stage('Container image scan  quality gate') {
 		    steps {
 			    script {
-				    def criticaloutput = sh(script: 'grype apache | grep -i high | wc -l', returnStdout: true).trim()
+				    def criticaloutput = sh(script: 'sudo grype apache | grep -i high | wc -l', returnStdout: true).trim()
 				    def criticalnumber = criticaloutput.toInteger()
 				    def criticalthreshold = 2
 				    if( criticalnumber > criticalthreshold) {
