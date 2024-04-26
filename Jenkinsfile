@@ -45,7 +45,7 @@ pipeline {
 			}
 		}
 	}
-	stage('docker iamge scan' {
+	stage('docker iamge scan') {
 		steps{
 			script {
 				sh ' sudo grype apache  -o template -t Docker/report.tmpl --file Docker/grype.html'
