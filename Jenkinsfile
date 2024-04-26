@@ -134,7 +134,31 @@ pipeline {
 					sudo docker run --rm -v $(pwd)/vapt:/openvas/results/ sathishbob/openvas /openvas/run_scan.py 123.123.123.123 openvas_scan_report -u root -p password'''
 			    }
 		    }
+		    post {
+		    success {
+			    publishHTML target: [
+              				allowMissing: false,
+              				alwaysLinkToLastBuild: true,
+              				keepAll: true,
+              				reportDir: 'vapt',
+              				reportFiles: 'openvas_scan_report.html',
+              				reportName: 'VAPT_Report'
+              			]
+		    }
+	    	}
 	  }
+	  stage('vapt quality gate') {
+		    steps {
+			    script {
+				    def criticaloutput = sh(script: 'cat vapt/openvas_scan_report.xml | grep -i high | wc -l', returnStdout: true).trim()
+				    def criticalnumber = criticaloutput.toInteger()
+				    def criticalthreshold = 1
+				    if( criticalnumber > criticalthreshold) {
+					    error("dast failled, so aborting the build")
+				    }
+			    }
+		    }
+	    }
     }
     post {
 	success {
