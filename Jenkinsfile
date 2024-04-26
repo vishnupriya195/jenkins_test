@@ -38,12 +38,50 @@ pipeline {
                 }
             }
         }
+	stage('docker build') {
+		steps {
+			script {
+				sh ' sudo docker build -t apache Docker'
+			}
+		}
+	}
+	stage('docker iamge scan' {
+		steps{
+			script {
+				sh ' grype apache  -o template -t Docker/report.tmpl --file Docker/grype.html
+			}
+		}
+		post {
+		    success {
+			    publishHTML target: [
+              				allowMissing: false,
+              				alwaysLinkToLastBuild: true,
+              				keepAll: true,
+              				reportDir: 'Docker',
+              				reportFiles: 'report.html',
+              				reportName: 'ContainerImageScan_Report'
+              ]
+
+		    }
+	    	}
+	}	
+	stage('Container image scan  quality gate') {
+		    steps {
+			    script {
+				    def criticaloutput = sh(script: 'grype apache | grep -i high | wc -l', returnStdout: true).trim()
+				    def criticalnumber = criticaloutput.toInteger()
+				    def criticalthreshold = 2
+				    if( criticalnumber > criticalthreshold) {
+					    error("dast failled, so aborting the build")
+				    }
+			    }
+		    }
 	 stage('sonar analysis') {
 	       steps {
 		       script {
 			       scannerHome = tool 'sonar';
 			       withSonarQubeEnv('sonar') {
-						sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=jenkins_test -Dsonar.projectName=jenkins_test -Dsonar.projectVersion=1.0 -Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=$WORKSPACE -Dsonar.java.binaries=$WORKSPACE -Dsonar.exclusions='OWASP-Dependency-Check/**, dastreport/**, vapt/**, report/**'"
+						sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=jenkins_test -Dsonar.projectName=jenkins_test -Dsonar.projectVersion=1.0 -Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=$WORKSPACE -Dsonar.java.binaries=$WORKSPACE -Dsonar.exclusions='OWASP-Dependency-Check/**, dastreport/**, vapt/**, Docker/**, report/**'"
 						}
 				}
 			}
