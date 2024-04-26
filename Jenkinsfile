@@ -76,6 +76,7 @@ pipeline {
 				    }
 			    }
 		    }
+	}
 	 stage('sonar analysis') {
 	       steps {
 		       script {
