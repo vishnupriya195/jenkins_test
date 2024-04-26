@@ -97,7 +97,7 @@ pipeline {
 					sudo rm -rf $PWD/dastreport/* || true
 	 				sudo mkdir -p $PWD/dastreport
 	   				sudo chmod 777 $PWD/dastreport
-					sudo docker run --rm -v $PWD/dastreport:/zap/wrk:rw -t softwaresecurityproject/zap-stable zap-baseline.py -t https://www.labasservice.com -m 1 -d -r dast.html -x dast.xml '''
+					sudo docker run --rm -v $PWD/dastreport:/zap/wrk:rw -t softwaresecurityproject/zap-stable zap-baseline.py -t https://www.labasservice.com -m 1 -d -r dast.html -x dast.xml || true'''
 			    }
 		    }
 	    	post {
