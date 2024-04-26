@@ -90,6 +90,30 @@ pipeline {
 			    }
 		    }
 	    }
+	    stage('DAST') {
+		    steps {
+			    script {
+				    sh '''
+					sudo rm -rf $PWD/dastreport/* || true
+	 				sudo mkdir -p $PWD/dastreport
+	   				sudo chmod 777 $PWD/dastreport
+					sudo docker run --rm -v $PWD/dastreport:/zap/wrk:rw -t softwaresecurityproject/zap-stable zap-baseline.py -t https://www.labasservice.com -m 1 -d -r dast.html -x dast.xml '''
+			    }
+		    }
+	    	post {
+		    success {
+			    publishHTML target: [
+              				allowMissing: false,
+              				alwaysLinkToLastBuild: true,
+              				keepAll: true,
+              				reportDir: ${WORKSPACE}/dastreport',
+              				reportFiles: 'dast.html',
+              				reportName: 'DAST_Report'
+              ]
+
+		    }
+	    	}
+	  }
     }
     post {
 	success {
