@@ -26,5 +26,11 @@ pipeline {
                 archiveArtifacts artifacts: 'api-gateway/target/*.jar', followSymlinks: false
             }
         }
+
+        stage('print') {
+            steps {
+                sh "echo testing"
+            }
+        }
     }
 }
