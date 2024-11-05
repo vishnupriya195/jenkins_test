@@ -33,5 +33,10 @@ pipeline {
             }
         }
 
+        stage('print') {
+            steps {
+                sh "echo testing"
+            }
+        }
     }
 }
