@@ -7,33 +7,31 @@ pipeline {
     }
 
     stages {
-        stage('pull') {
+        stage('pull SCM') {
             steps {
                 // Get some code from a GitHub repository
-                git credentialsId: 'git', url: 'git@github.com:sathishbob/jenkins_test.git'
-                }
+                git credentialsId: 'github', url: 'git@github.com:sathishbob/jenkins_test.git'
+            }
         }
         
-        stage('build') {
+        stage('Build') {
             steps {
-                sh "mvn -Dmaven.test.failure.ignore=true -f api-gateway/ clean package"
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true -f api-gateway/ clean install"
+            }
+        }
+        
+        stage('publish artifact') {
+            steps {
+                archiveArtifacts 'api-gateway/target/*.jar'
+            }
+        }
+        
+        stage('Publish junit result') {
+            steps {
+                junit 'api-gateway/target/surefire-reports/*.xml'
             }
         }
 
-        stage('publish') {
-            steps {
-                junit stdioRetention: '', testResults: 'api-gateway/target/surefire-reports/*.xml'
-                archiveArtifacts artifacts: 'api-gateway/target/*.jar', followSymlinks: false
-            }
-        }
-
-        stage('print') {
-            agent {
-                label 'linux'
-            }
-            steps {
-                sh "echo testing"
-            }
-        }
     }
 }
