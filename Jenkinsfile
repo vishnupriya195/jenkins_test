@@ -28,6 +28,9 @@ pipeline {
         }
 
         stage('print') {
+             agent {
+                label 'windows'
+            }
             steps {
                 echo "testing"
             }
