@@ -11,6 +11,10 @@ pipeline {
                                 choices: ["dev", "uat", "prod"],
                                 name: "ENVIRONMENT"
                             ),
+                            string(
+                                defaultValue: "training",
+                                name: "STRING"
+                            )
                         ])
                     ])
                 }
