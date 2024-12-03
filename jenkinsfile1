@@ -1,34 +1,26 @@
-properties([pipelineTriggers([githubPush()])])
-
 pipeline {
-   agent any
-  
-   stages {
-       stage('Setup Parameter') {
-           steps {
-                  script {
-                       properties([
-                           parameters([
-                                choice(
-                                   choices: ["dev", "uat", "prod"],
-                                   name: "ENVIRONMENT"
-                                   ),
-                                string(
-                                    defaultValue: "training",
-                                    name: "STRING")
-                            ])
-                       ])
-                    }
-               }
-         } 
-         stage('print parameter') {
-              steps {
-                 echo "Choice parameter is $ENVIRONMENT"
-                 echo "String parameter is $STRING"
-                 }
-          }
+    agent any
+
+    stages {
+        stage('define parameter') {
+            steps{
+                script {
+                    properties([
+                        parameters([
+                            choice(
+                                choices: ["dev", "uat", "prod"],
+                                name: "ENVIRONMENT"
+                            ),
+                        ])
+                    ])
+                }
+            }
+        }
+        
+        stage('Print parameter') {
+            steps {
+                echo "Choice parameter is $ENVIRONMENT"
+            }
+        }
     }
 }
-                       
-                                   
-                   
