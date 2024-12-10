@@ -1,14 +1,12 @@
 pipeline {
-    agent {
-        label 'linux'
-    }
+    agent any
     
     tools {
         maven "MVN3"
     }
     
     stages {
-        stage('pull scm') {
+        stage ('pull scm') {
             steps {
                 git credentialsId: 'github', url: 'git@github.com:sathishbob/jenkins_test.git'
             }
@@ -22,17 +20,8 @@ pipeline {
         
         stage('publish') {
             steps {
+                archiveArtifacts artifacts: 'api-gateway/target/*.jar', followSymlinks: false
                 junit stdioRetention: '', testResults: 'api-gateway/target/surefire-reports/*.xml'
-                archiveArtifacts 'api-gateway/target/*.jar'
-            }
-        }
-
-        stage('print') {
-             agent {
-                label 'windows'
-            }
-            steps {
-                echo "testing"
             }
         }
     }
