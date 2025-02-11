@@ -24,14 +24,5 @@ pipeline {
                 junit stdioRetention: '', testResults: 'api-gateway/target/surefire-reports/*.xml'
             }
         }
-
-        stage('print') {
-            agent {
-                label 'linux'
-            }
-            steps {
-                sh "echo testing"
-            }
-        }
     }
 }
