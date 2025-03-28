@@ -38,7 +38,7 @@ pipeline {
         {
             
         steps{
-             "echo testing"
+            bat "echo testing"
         }
     }
 }
